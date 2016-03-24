@@ -16,5 +16,8 @@ fi
 /bin/rm -f /root/.bash_history
 /bin/rm -f /home/adam/.bash_history
 
+# remove self
+/bin/rm -f $0
+
 # shutdown
 shutdown -h now
