@@ -3,7 +3,7 @@
 DATASTORE="datastore1"
 
 BASE_VM_NAME="debian"
-BASE_VM_DIR="/vmfs/volumes/${DATASTORE}/${BASE_VM_NAME}"
+BASE_VM_DIR="/vmfs/volumes/${DATASTORE}/.templates/${BASE_VM_NAME}"
 BASE_VMX="${BASE_VM_DIR}/${BASE_VM_NAME}.vmx"
 BASE_VMDK="${BASE_VM_DIR}/${BASE_VM_NAME}0.vmdk"
 
