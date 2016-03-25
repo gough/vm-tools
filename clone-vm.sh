@@ -54,7 +54,7 @@ NEW_VMDK="${NEW_VM_DIR}/${NEW_VM_NAME}0.vmdk"
 
 # change the following values
 /bin/sed -i "s@scsi0:0.fileName.*@scsi0:0.fileName = \"${NEW_VM_NAME}0.vmdk\"@" $NEW_VMX
-/bin/sed -i "s@displayName@displayName = \"${NEW_VM_NAME}\"@" $NEW_VMX
+/bin/sed -i "s@displayName.*@displayName = \"${NEW_VM_NAME}\"@" $NEW_VMX
 /bin/sed -i 's/uuid.bios.*/uuid.action = "change"/' $NEW_VMX
 
 # delete the following values
