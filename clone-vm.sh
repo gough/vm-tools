@@ -52,8 +52,6 @@ NEW_VMDK="${NEW_VM_DIR}/${NEW_VM_NAME}0.vmdk"
 # modify vmx
 /bin/echo -n "Modifying vmx... "
 
-uuid.action = "change"
-
 # change the following values
 /bin/sed -i "s@scsi0:0.fileName.*@scsi0:0.fileName = \"${NEW_VM_NAME}0.vmdk\"@" $NEW_VMX
 /bin/sed -i "s@scsi0:0.fileName.*@displayName = \"${NEW_VM_NAME}\"@" $NEW_VMX
