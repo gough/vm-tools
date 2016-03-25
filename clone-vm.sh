@@ -59,12 +59,28 @@ NEW_VMDK="${NEW_VM_DIR}/${NEW_VM_NAME}0.vmdk"
 
 # modify vmx
 /bin/echo -n "Modifying vmx... "
-/bin/sed -i 's@nvram = "debian.nvram"@@' $NEW_VMX
-/bin/sed -i "s@scsi0:0.fileName = \"debian0.vmdk\"@scsi0:0.fileName = \"${NEW_VM_NAME}0.vmdk\"@" $NEW_VMX
-/bin/sed -i 's@sata0:0.fileName = "/vmfs/volumes/554a73c9-25c6050f-21ee-308d99cc9950/iso/debian-8.3.0-amd64-CD-1.iso"@@' $NEW_VMX
-/bin/sed -i "s@displayName = \"debian\"@displayName = \"${NEW_VM_NAME}\"@" $NEW_VMX
-/bin/sed -i 's@sched.swap.derivedName = "/vmfs/volumes/554a73c9-25c6050f-21ee-308d99cc9950/debian/debian-7fedc08d.vswp"@@' $NEW_VMX
-/bin/sed -i 's@migrate.hostlog = "./debian-7fedc08d.hlog"@@' $NEW_VMX
+
+uuid.action = "change"
+
+# change the following values
+/bin/sed -i "s@scsi0:0.fileName.*@scsi0:0.fileName = \"${NEW_VM_NAME}0.vmdk\"@" $NEW_VMX
+/bin/sed -i "s@scsi0:0.fileName.*@displayName = \"${NEW_VM_NAME}\"@" $NEW_VMX
+/bin/sed -i 's/uuid.bios.*/uuid.action = "change"/' $NEW_VMX
+
+# delete the following values
+/bin/sed -i "/nvram/d" $NEW_VMX
+/bin/sed -i '/sata0:0.fileName/d' $NEW_VMX
+/bin/sed -i '/uuid.location/d' $NEW_VMX
+/bin/sed -i '/vc.uuid/d' $NEW_VMX
+/bin/sed -i '/sched.swap.derivedName/d' $NEW_VMX
+/bin/sed -i '/migrate.hostlog/d' $NEW_VMX
+/bin/sed -i '/scsi0.sasWWID/d' $NEW_VMX
+/bin/sed -i '/ethernet0.generatedAddress/d' $NEW_VMX
+/bin/sed -i '/vmci0.id/d' $NEW_VMX
+/bin/sed -i '/tools.remindInstall/d' $NEW_VMX
+/bin/sed -i '/vmotion.checkpointFBSize/d' $NEW_VMX
+/bin/sed -i '/vmotion.checkpointSVGAPrimarySize/d' $NEW_VMX
+
 /bin/echo "Done"
 
 # copy vmdk
