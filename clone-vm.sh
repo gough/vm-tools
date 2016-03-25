@@ -8,18 +8,10 @@ fi
 DATASTORE="datastore1"
 
 BASE_VM_NAME=$1
-if [ "$BASE_VM_NAME" = "debian" ]
-	|| [ "$BASE_VM_NAME" = "debian8" ]
-	|| [ "$BASE_VM_NAME" = "debian-8" ]
-	|| [ "$BASE_VM_NAME" = "debian8.3" ]
-	|| [ "$BASE_VM_NAME" = "debian-8.3" ]; then
+if [ "$BASE_VM_NAME" = "debian" ]; then
 	BASE_VM_NAME="debian-8.3"
-elif [ "$BASE_VM_NAME" = "ubuntu" ]
-	|| [ "$BASE_VM_NAME" = "ubuntu14" ]
-	|| [ "$BASE_VM_NAME" = "ubuntu-14" ]
-	|| [ "$BASE_VM_NAME" = "ubuntu14.04" ]
-	|| [ "$BASE_VM_NAME" = "ubuntu-14.04" ]; then
-	BASE_VM_NAME="ubuntu-14.04"
+elif [ "$BASE_VM_NAME" = "ubuntu" ]; then
+	BASE_VM_NAME="ubuntu-server-14.04"
 else
 	/bin/echo "Base VM not found/not supported"
 	exit 1
