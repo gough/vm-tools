@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ "$#" -ne 2 ]; then
-	/bin/echo "Usage: clone-vm base_vm_name new_vm_name"; /bin/echo ""
+	/bin/echo "Usage: clone-vm BASE_VM_NAME NEW_VM_NAME"; /bin/echo ""
 	exit 1
 fi
 
