@@ -1,31 +1,51 @@
 #!/bin/sh
 
+if [ "$#" -ne 2 ]; then
+	/bin/echo "Usage: $0 base_vm_name new_vm_name"
+	exit 1
+fi
+
 DATASTORE="datastore1"
 
-BASE_VM_NAME="debian"
+BASE_VM_NAME=$1
+if [ "$BASE_VM_NAME" = "debian" ]
+	|| [ "$BASE_VM_NAME" = "debian8" ]
+	|| [ "$BASE_VM_NAME" = "debian-8" ]
+	|| [ "$BASE_VM_NAME" = "debian8.3" ]
+	|| [ "$BASE_VM_NAME" = "debian-8.3" ]; then
+	BASE_VM_NAME="debian-8.3"
+elif [ "$BASE_VM_NAME" = "ubuntu" ]
+	|| [ "$BASE_VM_NAME" = "ubuntu14" ]
+	|| [ "$BASE_VM_NAME" = "ubuntu-14" ]
+	|| [ "$BASE_VM_NAME" = "ubuntu14.04" ]
+	|| [ "$BASE_VM_NAME" = "ubuntu-14.04" ]; then
+	BASE_VM_NAME="ubuntu-14.04"
+else
+	/bin/echo "Base VM not found/not supported"
+	exit 1
+fi
+
+# set base vm directory, vmx, and vmdk locations
 BASE_VM_DIR="/vmfs/volumes/${DATASTORE}/.templates/${BASE_VM_NAME}"
 BASE_VMX="${BASE_VM_DIR}/${BASE_VM_NAME}.vmx"
 BASE_VMDK="${BASE_VM_DIR}/${BASE_VM_NAME}0.vmdk"
 
-NEW_VM_NAME=$1
-NEW_VM_DIR="/vmfs/volumes/${DATASTORE}/${NEW_VM_NAME}"
-NEW_VMX="${NEW_VM_DIR}/${NEW_VM_NAME}.vmx"
-NEW_VMDK="${NEW_VM_DIR}/${NEW_VM_NAME}0.vmdk"
-
-if [ "$#" -ne 1 ]; then
-	/bin/echo "Usage: $0 new_vm_name"
-	exit 1
-fi
-
+NEW_VM_NAME=$2
 if [ ${#NEW_VM_NAME} -lt 2 ]; then
 	/bin/echo "New VM name is too short"
 	exit 1
 fi
 
+# set new vm directory (to be checked)
+NEW_VM_DIR="/vmfs/volumes/${DATASTORE}/${NEW_VM_NAME}"
 if [ -d "$NEW_VM_DIR" ]; then
 	/bin/echo "Directory with new VM name already exists"
 	exit 1
 fi
+
+# set new vmx and vmdk locations
+NEW_VMX="${NEW_VM_DIR}/${NEW_VM_NAME}.vmx"
+NEW_VMDK="${NEW_VM_DIR}/${NEW_VM_NAME}0.vmdk"
 
 # create directory
 /bin/echo -n "Creating directory... "
